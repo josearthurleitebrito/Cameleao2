@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 4dad9b6682d9a2847bb3a392a572a2c4
+guid: ff2b60872f2dbc644a6ede90d71186d8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1349180431371488363
-    second: Camera_0
-  - first:
-      213: -7557303913586048089
-    second: Camera_1
+      213: -3577780955501513755
+    second: Museum_Black_Shadow_Singles_32x32_347_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,45 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Camera_0
+      name: Museum_Black_Shadow_Singles_32x32_347_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 5
         y: 0
-        width: 16
-        height: 16
+        width: 123
+        height: 87
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6c4ecd347049b210800000000000000
-      internalID: 1349180431371488363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Camera_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7a3c80381201f1790800000000000000
-      internalID: -7557303913586048089
+      spriteID: 5e3bc274d2b295ec0800000000000000
+      internalID: -3577780955501513755
       vertices: []
       indices: 
       edges: []
@@ -163,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4be19087011250d4aa107c4c23693fa9
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -171,12 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Camera_0: 1349180431371488363
-      Camera_1: -7557303913586048089
+      Museum_Black_Shadow_Singles_32x32_347_0: -3577780955501513755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
