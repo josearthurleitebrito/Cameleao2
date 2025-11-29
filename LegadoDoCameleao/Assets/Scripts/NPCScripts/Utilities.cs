@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Extensions
+// Esta classe DEVE ser estática para funcionar como extensão
+public static class Utilities
 {
     // Método para embaralhar listas (Fisher-Yates)
     public static void Shuffle<T>(this IList<T> list)
