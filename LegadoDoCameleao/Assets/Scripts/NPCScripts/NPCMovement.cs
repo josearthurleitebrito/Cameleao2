@@ -9,9 +9,7 @@ public class NPCMovement : MonoBehaviour
 
     [Header("Configurações")]
     public float velocidade = 1.5f;
-    public float tempoObservandoObra = 4f; // Tempo fixo para olhar OBRAS (filhos)
-    
-    // REMOVI: public float waitTimeAtPoint; -> Agora usamos o tempo da SALA.
+    public float tempoObservando = 3f;
 
     [Header("Comportamento")]
     [Tooltip("0 = Nunca sai da sala (se tiver obras). 1 = Sempre muda de sala.")]
@@ -52,7 +50,7 @@ public class NPCMovement : MonoBehaviour
 
         if (pathfinder == null)
         {
-            Debug.LogError("NPC precisa da referência ao NodePathfinder!");
+            Debug.LogError("NPC precisa da referência ao PolicePathfinder!");
             return;
         }
 
@@ -68,11 +66,18 @@ public class NPCMovement : MonoBehaviour
 
         if (salaAtual != null)
         {
+            // Teleporta para o inicio
             transform.position = salaAtual.transform.position;
-            if (reservationManager != null) reservationManager.TryReserveNode(salaAtual.transform);
+            
+            // Define o alvo atual como o nó onde nasci
+            alvoAtual = salaAtual.transform; 
+
+            // Tenta reservar onde estou (para ninguém vir em cima de mim)
+            if (reservationManager != null) reservationManager.TryReserveNode(alvoAtual);
 
             if (mostrarDebug) Debug.Log($"<color=green>[START] {name} começou na sala: {salaAtual.name}</color>");
             
+            // Começa o ciclo de decisão
             StartCoroutine(TomarDecisao()); 
         }
     }
@@ -92,13 +97,16 @@ public class NPCMovement : MonoBehaviour
 
     void MoverParaAlvo()
     {
+        // Se já estou no alvo (distância pequena), não movo
         float distancia = Vector2.Distance(transform.position, alvoAtual.position);
 
         if (distancia < 0.2f) 
         {
             if(rb != null) rb.linearVelocity = Vector2.zero;
             AtualizarAnimacao(Vector2.zero);
-            StartCoroutine(AoChegarNoAlvo());
+            
+            // Só chama a rotina de chegada se ainda não estiver esperando
+            if (!esperando) StartCoroutine(AoChegarNoAlvo());
         }
         else
         {
@@ -112,14 +120,13 @@ public class NPCMovement : MonoBehaviour
     {
         esperando = true;
         
-        if (reservationManager != null) reservationManager.FreeNode(alvoAtual);
+        // NOTA: Não liberamos o nó aqui! O nó só é liberado quando garantimos o PRÓXIMO.
+        // Isso evita que o nó fique livre enquanto o NPC ainda está parado em cima dele pensando.
 
         if (estadoAtual == Estado.IndoParaCentro)
         {
-            // AQUI ESTÁ A MUDANÇA: Usa o tempo configurado na PRÓPRIA SALA
             float tempoSala = (salaAtual != null) ? salaAtual.tempoDeEsperaCentro : 2f;
             yield return new WaitForSeconds(tempoSala);
-            
             StartCoroutine(TomarDecisao());
         }
         else if (estadoAtual == Estado.IndoParaObra)
@@ -127,15 +134,13 @@ public class NPCMovement : MonoBehaviour
             if (mostrarDebug) Debug.Log($"<color=blue>[NPC {name}]</color> Observando obra: {alvoAtual.name}...");
             
             ultimoFilhoVisitado = alvoAtual; 
+            yield return new WaitForSeconds(tempoObservando);
             
-            // Usa o tempo fixo para obras (pode customizar no NodeChild também se quiser)
-            yield return new WaitForSeconds(tempoObservandoObra);
-            
-            DefinirAlvo(salaAtual.transform, Estado.VoltandoParaCentro, "Voltando para Centro");
+            // Tenta voltar para o centro
+            TentarIrPara(salaAtual.transform, Estado.VoltandoParaCentro, "Voltando para Centro");
         }
         else if (estadoAtual == Estado.VoltandoParaCentro)
         {
-            // Volta rápida pro centro, espera pouquinho (0.5s) pra decidir
             yield return new WaitForSeconds(0.5f);
             StartCoroutine(TomarDecisao());
         }
@@ -151,20 +156,22 @@ public class NPCMovement : MonoBehaviour
 
         if (!temObras) querSair = true; 
 
+        // Tenta estratégia 1
         if (!querSair && temObras)
         {
             logDecisao += "Decidi VER OBRA. ";
             if (TentarEscolherObra(ref logDecisao)) decidiu = true;
-            else logDecisao += "Mas candidatas estavam ocupadas ou repetidas. ";
+            else logDecisao += "Mas candidatas ocupadas. ";
         }
         
         if (querSair && !decidiu)
         {
             logDecisao += "Decidi SAIR DA SALA. ";
             if (TentarMudarDeSala(ref logDecisao)) decidiu = true;
-            else logDecisao += "Mas as saídas estavam ocupadas. ";
+            else logDecisao += "Mas saídas ocupadas. ";
         }
 
+        // Tenta estratégia 2 (Fallback)
         if (!decidiu)
         {
             logDecisao += "Trocando estratégia... ";
@@ -184,10 +191,47 @@ public class NPCMovement : MonoBehaviour
         }
         else
         {
-            if (mostrarDebug) Debug.Log($"<color=orange>[NPC {name}]</color> {logDecisao} -> <color=red>FALHA: Tudo bloqueado. Esperando...</color>");
-            yield return new WaitForSeconds(1f); 
+            if (mostrarDebug) Debug.Log($"<color=orange>[NPC {name}]</color> {logDecisao} -> <color=red>Tudo bloqueado. Esperando...</color>");
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.5f)); 
             StartCoroutine(TomarDecisao());
         }
+    }
+
+    // Função unificada para tentar reservar e mover
+    bool TentarIrPara(Transform destino, Estado novoEstado, string logExtra = "")
+    {
+        if (reservationManager != null)
+        {
+            if (reservationManager.TryReserveNode(destino))
+            {
+                // SUCESSO! Reservou o novo.
+                // Agora sim, libera o antigo (onde estou parado agora).
+                if (alvoAtual != null) reservationManager.FreeNode(alvoAtual);
+
+                alvoAtual = destino;
+                estadoAtual = novoEstado;
+                esperando = false; // Começa a andar
+                
+                if (mostrarDebug && logExtra != "") Debug.Log($"<color=cyan>[NPC {name}]</color> {logExtra}");
+                return true;
+            }
+            else
+            {
+                // FALHA! O destino está ocupado.
+                // Se era pra voltar pro centro, preciso esperar liberar.
+                if (novoEstado == Estado.VoltandoParaCentro)
+                {
+                    StartCoroutine(EsperarCentroLiberar(destino));
+                }
+                return false;
+            }
+        }
+        
+        // Se não tem manager, só vai.
+        alvoAtual = destino;
+        estadoAtual = novoEstado;
+        esperando = false;
+        return true;
     }
 
     bool TentarEscolherObra(ref string log)
@@ -198,13 +242,12 @@ public class NPCMovement : MonoBehaviour
         foreach(var filho in salaAtual.filhos)
         {
             if (filho != null && filho.transform != ultimoFilhoVisitado)
-            {
                 candidatas.Add(filho);
-            }
         }
 
         if (candidatas.Count == 0) return false;
 
+        // Shuffle
         for (int i = 0; i < candidatas.Count; i++) {
              NodeChild temp = candidatas[i];
              int r = Random.Range(i, candidatas.Count);
@@ -214,14 +257,13 @@ public class NPCMovement : MonoBehaviour
 
         foreach (var obra in candidatas)
         {
-            if (reservationManager == null || reservationManager.TryReserveNode(obra.transform))
+            // Usa a função unificada
+            if (TentarIrPara(obra.transform, Estado.IndoParaObra))
             {
                 log += $"<color=cyan>SUCESSO! Alvo: {obra.name} (Obra)</color>";
-                DefinirAlvo(obra.transform, Estado.IndoParaObra, null);
                 return true;
             }
         }
-        
         return false;
     }
 
@@ -246,12 +288,10 @@ public class NPCMovement : MonoBehaviour
         {
             NodeParent scriptSala = t.GetComponent<NodeParent>();
             if (scriptSala != null && scriptSala != salaAnterior)
-            {
                 candidatos.Add(scriptSala);
-            }
         }
 
-        if (candidatos.Count == 0)
+        if (candidatos.Count == 0) // Beco sem saída, permite voltar
         {
             foreach (Transform t in vizinhos)
             {
@@ -269,43 +309,24 @@ public class NPCMovement : MonoBehaviour
 
         foreach (NodeParent cand in candidatos)
         {
-            if (reservationManager == null || reservationManager.TryReserveNode(cand.transform))
+            // Usa a função unificada
+            if (TentarIrPara(cand.transform, Estado.IndoParaCentro))
             {
                 salaAnterior = salaAtual;
                 salaAtual = cand; 
-                
                 ultimoFilhoVisitado = null; 
-
                 log += $"<color=cyan>SUCESSO! Alvo: {cand.name} (Sala Vizinha)</color>";
-                DefinirAlvo(cand.transform, Estado.IndoParaCentro, null);
                 return true;
             }
         }
         return false;
     }
 
-    void DefinirAlvo(Transform novoAlvo, Estado novoEstado, string logExtra)
-    {
-        if (novoEstado == Estado.VoltandoParaCentro)
-        {
-            if (reservationManager != null && !reservationManager.TryReserveNode(novoAlvo))
-            {
-                StartCoroutine(EsperarCentroLiberar(novoAlvo));
-                return;
-            }
-            if (mostrarDebug && logExtra != null) Debug.Log($"<color=yellow>[NPC {name}]</color> {logExtra}");
-        }
-
-        alvoAtual = novoAlvo;
-        estadoAtual = novoEstado;
-        esperando = false; 
-    }
-
     IEnumerator EsperarCentroLiberar(Transform centro)
     {
-        if (mostrarDebug) Debug.Log($"<color=orange>[NPC {name}]</color> Quero voltar pro centro, mas tá ocupado. Esperando...");
-        yield return new WaitForSeconds(0.5f);
-        DefinirAlvo(centro, Estado.VoltandoParaCentro, "Tentando voltar pro centro de novo...");
+        if (mostrarDebug) Debug.Log($"<color=orange>[NPC {name}]</color> Centro ocupado. Esperando para voltar...");
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+        TentarIrPara(centro, Estado.VoltandoParaCentro, "Tentando voltar pro centro de novo...");
     }
 
     void AtualizarAnimacao(Vector2 dir)

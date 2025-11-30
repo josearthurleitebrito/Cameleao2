@@ -10,6 +10,10 @@ public class InteractableObject : MonoBehaviour
     [Header("Configurações")]
     public bool freezePlayer = true; // Obras congelam o player? NPCs congelam?
 
+    [Header("Missão")]
+    public bool ehObjetivoDaFase = false; // Marque TRUE se for uma obra necessária para passar de fase
+    private bool jaFoiInspecionado = false; // Controle interno
+
     private DialogueUI2D dialogueUI;
     private PlayerController playerController;
     private int index = 0;
@@ -17,7 +21,11 @@ public class InteractableObject : MonoBehaviour
 
     void Start()
     {
-        dialogueUI = FindObjectOfType<DialogueUI2D>();
+        // Atualize para FindFirstObjectByType
+        if (dialogueUI == null)
+            dialogueUI = FindFirstObjectByType<DialogueUI2D>();
+
+        // Atualize para FindFirstObjectByType
         // Tenta achar o PlayerController de forma segura (se tiver tag Player é melhor)
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if(player != null) playerController = player.GetComponent<PlayerController>();
@@ -30,11 +38,21 @@ public class InteractableObject : MonoBehaviour
         isInteracting = true;
         index = 0;
 
-        // --- ADICIONE ESTA LINHA ---
-        // Tenta desbloquear no codex usando o mesmo nome do objeto
+        // --- LÓGICA DO CODEX (Já existia) ---
         if (CodexManager.instance != null) 
             CodexManager.instance.UnlockEntry(objectName);
-        // ---------------------------
+
+        // --- NOVA LÓGICA DE PROGRESSO DA FASE ---
+        if (ehObjetivoDaFase && !jaFoiInspecionado)
+        {
+            jaFoiInspecionado = true; // Marca como visto para não contar de novo
+            
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.RegistrarInspecao();
+            }
+        }
+        // ----------------------------------------
 
         if (freezePlayer && playerController != null)
             playerController.enabled = false;
@@ -58,9 +76,22 @@ public class InteractableObject : MonoBehaviour
     public void EndInteraction()
     {
         isInteracting = false;
-        dialogueUI.HideDialogue();
+        dialogueUI.HideDialogue(); // Fecha o texto da obra
+
+        // --- NOVA LÓGICA ---
+        // Verifica se acabamos de completar a missão com essa obra
+        if (GameManager.instance != null && GameManager.instance.DeveAvisarConclusao())
+        {
+            // Abre o aviso do Camaleão
+            // Passamos 'null' no terceiro parâmetro pois é um pensamento, não uma interação repetível
+            dialogueUI.ShowDialogue("Camaleão", GameManager.instance.textoDeConclusao, null);
+            
+            // O Player continua travado porque abriu um novo diálogo
+            return; 
+        }
+        // -------------------
 
         if (freezePlayer && playerController != null)
-            playerController.enabled = true; // Destrava
+            playerController.enabled = true; // Destrava o player
     }
 }

@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 movementVector = _rawInput;
 
-        // Lógica de Movimento
+        // Lógica de Movimento (Quando há Input)
         if (movementVector.sqrMagnitude > 0.01f) 
         {
             MovePlayer(movementVector);
@@ -77,8 +77,13 @@ public class PlayerController : MonoBehaviour
             
             _playerAnimator.SetInteger("Movimento", 1); 
         }
-        else
+        else // Quando NÃO há Input (Parado)
         {
+            // --- CORREÇÃO AQUI ---
+            // Força a velocidade física a ser zero para evitar deslizes/empurrões
+            _playerRigidbody2D.linearVelocity = Vector2.zero; 
+            // ---------------------
+
             _playerAnimator.SetInteger("Movimento", 0); 
             
             _playerAnimator.SetFloat("LastMoveX", _lastMoveX);

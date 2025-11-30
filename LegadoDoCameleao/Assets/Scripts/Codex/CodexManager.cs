@@ -32,8 +32,18 @@ public class CodexManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        // Padrão Singleton com persistência entre cenas
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // <--- A MÁGICA ACONTECE AQUI
+        }
+        else
+        {
+            // Se já existe um Codex vindo da fase anterior, destrói este novo (da fase atual)
+            // para manter os dados do antigo.
+            Destroy(gameObject);
+        }
     }
 
     void Start()
