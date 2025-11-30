@@ -22,7 +22,7 @@ public class NPCMovement : MonoBehaviour
     public bool mostrarDebug = true;
 
     [Header("Sistemas")]
-    public PolicePathfinder pathfinder; 
+    public NodePathfinder pathfinder; 
     public PathReservationManager reservationManager; 
 
     // Estado interno
@@ -52,7 +52,7 @@ public class NPCMovement : MonoBehaviour
 
         if (pathfinder == null)
         {
-            Debug.LogError("NPC precisa da referência ao PolicePathfinder!");
+            Debug.LogError("NPC precisa da referência ao NodePathfinder!");
             return;
         }
 

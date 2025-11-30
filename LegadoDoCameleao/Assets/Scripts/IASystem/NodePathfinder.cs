@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PolicePathfinder : MonoBehaviour
+public class NodePathfinder : MonoBehaviour
 {
     // Mapeamento: Key = Índice do Waypoint; Value = Lista de Índices dos Waypoints Vizinhos VÁLIDOS (sem diagonal)
     // Exemplo: 0 -> 1 e 3 (Baixo Central e Meio Esquerdo)

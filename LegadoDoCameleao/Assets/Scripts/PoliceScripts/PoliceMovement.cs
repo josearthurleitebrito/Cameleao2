@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PoliceMovement : MonoBehaviour
 {
-    // --- Componentes ---
     private Rigidbody2D _npcRigidbody2D;
     private Animator _npcAnimator;
 
@@ -20,18 +19,20 @@ public class PoliceMovement : MonoBehaviour
 
     // --- Variáveis Internas ---
     private int currentPointIndex = 0;
-    private int previousPointIndex = -1; // Armazena o índice do nó anterior ao atual (usado para filtro)
+    private int previousPointIndex = -99; 
     private bool isWaiting = false;
     private float currentMovementSpeed;
     
     private Vector3 targetPosition; 
+    private Transform currentTargetNode; // Para liberar a reserva depois
 
     [HideInInspector] public Vector2 CurrentDirection = Vector2.up; 
     private float _lastMoveX = 0f;
     private float _lastMoveY = 1f;
 
-    [Header("Componentes Auxiliares do Grafo")]
-    [SerializeField] private PolicePathfinder _pathfinder; 
+    [Header("Sistemas de IA")]
+    [SerializeField] private NodePathfinder _pathfinder; 
+    [SerializeField] private PathReservationManager _reservationManager; // NOVO: Gerente de Colisão
 
     void Awake()
     {
@@ -48,22 +49,24 @@ public class PoliceMovement : MonoBehaviour
 
     void Start()
     {
-         if (patrolPoints.Length > 0)
+         if (patrolPoints != null && patrolPoints.Length > 0)
          {
+            // Tenta reservar o ponto inicial para evitar spawn duplo
+            if (_reservationManager != null) _reservationManager.TryReserveNode(patrolPoints[currentPointIndex]);
+            currentTargetNode = patrolPoints[currentPointIndex];
+
             transform.position = patrolPoints[currentPointIndex].position;
-            
-            // Define o primeiro alvo. O nó atual (0) se tornará o nó anterior na PRÓXIMA chamada.
             GoToNextPoint(false); 
          }
          else
          {
-             Debug.LogWarning("O Policial não tem pontos de patrulha definidos!");
+             Debug.LogWarning($"O Policial '{name}' não tem pontos de patrulha definidos!");
          }
     }
 
     void FixedUpdate()
     {
-        if (targetPosition != transform.position && !isWaiting)
+        if (targetPosition != Vector3.zero && targetPosition != transform.position && !isWaiting)
         {
             HandleMovement(currentMovementSpeed);
         }
@@ -73,37 +76,31 @@ public class PoliceMovement : MonoBehaviour
         }
     }
     
-    // --- LÓGICA DE MOVIMENTO E FÍSICA ---
-    
     private void HandleMovement(float speed)
     {
         Vector3 direction3D = targetPosition - transform.position;
         Vector2 moveDirection2D = new Vector2(direction3D.x, direction3D.y).normalized;
         float distanceToTarget = direction3D.magnitude;
         
-        // Se atingiu o alvo dentro da tolerância (0.3f)
         if (distanceToTarget < 0.3f) 
         {
             _npcRigidbody2D.linearVelocity = Vector2.zero;
             UpdateAnimation(Vector2.zero);
             
-            // Se o alvo é um PONTO DE PATRULHA
-            if (Vector3.Distance(targetPosition, patrolPoints[currentPointIndex].position) < 0.01f)
+            // Verifica se chegou ao Ponto de Patrulha
+            if (patrolPoints.Length > 0 && Vector3.Distance(targetPosition, patrolPoints[currentPointIndex].position) < 0.1f)
             {
-                // Inicia a espera APENAS se não estiver esperando (evita loop)
                 if (!isWaiting)
                 {
                     isWaiting = true;
                     StartCoroutine(WaitAndGoToNextPoint());
                 }
             }
-            // CRÍTICO: Retorna para garantir que o FixedUpdate pare o movimento neste frame.
             return;
         }
         else
         {
             _npcRigidbody2D.MovePosition(_npcRigidbody2D.position + moveDirection2D * speed * Time.fixedDeltaTime);
-            
             UpdateAnimation(moveDirection2D);
             CurrentDirection = moveDirection2D;
         }
@@ -111,12 +108,10 @@ public class PoliceMovement : MonoBehaviour
 
     public void StopMovement()
     {
-        _npcRigidbody2D.linearVelocity = Vector2.zero;
+        if (_npcRigidbody2D != null) _npcRigidbody2D.linearVelocity = Vector2.zero;
         UpdateAnimation(Vector2.zero);
     }
     
-    // --- LÓGICA DE PATRULHA E COROUTINE ---
-
     public void SetTarget(Vector3 newTarget, float speed)
     {
         targetPosition = newTarget;
@@ -131,58 +126,76 @@ public class PoliceMovement : MonoBehaviour
         GoToNextPoint(true); 
     }
 
-    // Calcula e define o próximo ponto de patrulha
     public void GoToNextPoint(bool randomize)
     {
         isWaiting = false;
         if (_pathfinder == null || _pathfinder.allWaypoints.Length == 0) return;
 
-        // CRÍTICO: O nó a ser EXCLUÍDO no filtro é o nó anterior ao atual.
-        // Se previousPointIndex for -1 (Start), ele não exclui nada.
-        int nodeToExcludeIndex = previousPointIndex; 
+        // 1. Libera o nó anterior (Onde ele estava antes de começar a andar para o novo)
+        // Nota: Policiais liberam o nó assim que SAEM dele, para manter o fluxo.
+        if (_reservationManager != null && currentTargetNode != null)
+        {
+            _reservationManager.FreeNode(currentTargetNode);
+        }
 
-        // Obtém vizinhos do ponto onde ele está (currentPointIndex)
+        int nodeToExcludeIndex = previousPointIndex; 
         List<Transform> neighborTransforms = _pathfinder.GetNeighbors(currentPointIndex);
-        
-        // --- 2. Filtra o Retorno Imediato ---
         List<Transform> validTargets = new List<Transform>();
         
+        // Filtra retorno imediato
         foreach (Transform neighbor in neighborTransforms)
         {
             int neighborIndex = System.Array.IndexOf(_pathfinder.allWaypoints, neighbor);
-
-            // Regra: Se o índice do vizinho é igual ao índice que ele veio (previousPointIndex), ignore.
             if (neighborIndex != nodeToExcludeIndex)
             {
                 validTargets.Add(neighbor);
             }
         }
         
-        // --- 3. Seleção Aleatória do Alvo ---
-        Transform nextTarget;
+        Transform nextTarget = null;
 
+        // Se tiver opções válidas, tenta achar uma LIVRE
         if (validTargets.Count > 0)
         {
-            nextTarget = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
+            // Embaralha para tentar aleatoriamente
+            for (int i = 0; i < validTargets.Count; i++) {
+                 Transform temp = validTargets[i];
+                 int r = Random.Range(i, validTargets.Count);
+                 validTargets[i] = validTargets[r];
+                 validTargets[r] = temp;
+            }
+
+            foreach (var target in validTargets)
+            {
+                // Tenta reservar. Se conseguir, define como alvo.
+                if (_reservationManager == null || _reservationManager.TryReserveNode(target))
+                {
+                    nextTarget = target;
+                    break;
+                }
+            }
         }
-        else
+
+        // Se não conseguiu nenhum alvo (todos ocupados ou sem vizinhos)
+        if (nextTarget == null)
         {
-            // Se não houver vizinhos válidos, permanece no ponto atual
-            nextTarget = _pathfinder.allWaypoints[currentPointIndex]; 
+            // Fica parado no nó atual (seguro) e tenta de novo em breve
+            // Não libera o nó atual se for ficar nele!
+            if (_reservationManager != null) _reservationManager.TryReserveNode(_pathfinder.allWaypoints[currentPointIndex]);
+            
+            currentTargetNode = _pathfinder.allWaypoints[currentPointIndex];
+            nextTarget = currentTargetNode;
+            
+            // Força uma espera antes de tentar de novo para não travar o processamento
             StartCoroutine(WaitAndGoToNextPoint()); 
-            return; 
+            return;
         }
 
-        // --- 4. Atualiza os Índices e o Target ---
+        // Atualiza índices e define movimento
         int newPointIndex = System.Array.IndexOf(_pathfinder.allWaypoints, nextTarget);
-        
-        // CRÍTICO: O nó que ele acabou de sair (currentPointIndex) se torna o nó anterior.
         previousPointIndex = currentPointIndex; 
-        
-        // O nó atual se torna o novo alvo
         currentPointIndex = newPointIndex; 
-
-        Debug.Log($"Policial no Nó {previousPointIndex} escolheu ir para o Nó {currentPointIndex} ({nextTarget.name}).");
+        currentTargetNode = nextTarget;
 
         SetTarget(nextTarget.position, patrolSpeed);
     }
@@ -191,9 +204,10 @@ public class PoliceMovement : MonoBehaviour
     {
         StopAllCoroutines(); 
         isWaiting = false;
+        // Se entrar em alerta, libera o nó de patrulha para outros não ficarem esperando
+        if (_reservationManager != null && currentTargetNode != null)
+             _reservationManager.FreeNode(currentTargetNode);
     }
-    
-    // --- LÓGICA DE ANIMAÇÃO E LANTERNA ---
     
     void UpdateAnimation(Vector2 moveDirection)
     {
