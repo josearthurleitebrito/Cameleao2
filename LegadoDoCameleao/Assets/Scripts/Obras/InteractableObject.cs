@@ -30,8 +30,14 @@ public class InteractableObject : MonoBehaviour
         isInteracting = true;
         index = 0;
 
+        // --- ADICIONE ESTA LINHA ---
+        // Tenta desbloquear no codex usando o mesmo nome do objeto
+        if (CodexManager.instance != null) 
+            CodexManager.instance.UnlockEntry(objectName);
+        // ---------------------------
+
         if (freezePlayer && playerController != null)
-            playerController.enabled = false; // Trava o movimento
+            playerController.enabled = false;
 
         dialogueUI.ShowDialogue(objectName, sentences[index], this);
     }
