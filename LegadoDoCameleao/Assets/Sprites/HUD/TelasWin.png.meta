@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d08e34da6fcf021458ae7a61155c8ddf
+guid: cf43d9e664e59b04fab04819449c2234
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3368733510214701264
-    second: animated_control_room_server_32x32_0
+      213: -1351643988185558850
+    second: TelasWin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,67 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animated_control_room_server_32x32_0
+      name: TelasWin_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 6
-        width: 32
-        height: 70
+        y: 0
+        width: 480
+        height: 270
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d05d4b774520ce20800000000000000
-      internalID: 3368733510214701264
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_control_room_server_32x32_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 6
-        width: 32
-        height: 70
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7db51502ded9ec149b99c7bf21c75db1
-      internalID: 1397044633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_control_room_server_32x32_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 6
-        width: 32
-        height: 70
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 078033d26e5f5c0439da2b87cfcae113
-      internalID: 1799112981
+      spriteID: eb0586d34fefd3de0800000000000000
+      internalID: -1351643988185558850
       vertices: []
       indices: 
       edges: []
@@ -182,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: bfb7f907ec578204f862d2b12d3c8120
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -190,13 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":70.0},"gridSpriteOffset":{"x":0.0,"y":20.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      animated_control_room_server_32x32_0: 3368733510214701264
-      animated_control_room_server_32x32_1: 1397044633
-      animated_control_room_server_32x32_2: 1799112981
+      TelasWin_0: -1351643988185558850
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

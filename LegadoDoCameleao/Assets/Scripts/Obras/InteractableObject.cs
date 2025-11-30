@@ -2,96 +2,89 @@ using UnityEngine;
 
 public class InteractableObject : MonoBehaviour
 {
-    [Header("Dados da Interação")]
-    public string objectName = "Vaso Antigo"; // Nome que aparece no título
-    [TextArea(3, 10)]
-    public string[] sentences; // As falas ou descrições
-
-    [Header("Configurações")]
-    public bool freezePlayer = true; // Obras congelam o player? NPCs congelam?
-
-    [Header("Missão")]
-    public bool ehObjetivoDaFase = false; // Marque TRUE se for uma obra necessária para passar de fase
-    private bool jaFoiInspecionado = false; // Controle interno
+    [Header("Dados")]
+    public string objectName;
+    [TextArea] public string[] sentences;
+    
+    [Header("Config")]
+    public bool freezePlayer = true;
+    public bool ehObjetivoDaFase = false;
+    private bool jaFoiInspecionado = false;
 
     private DialogueUI2D dialogueUI;
     private PlayerController playerController;
     private int index = 0;
     private bool isInteracting = false;
+    
+    // Controle interno para saber se estamos mostrando a msg de "Missão Cumprida"
+    private bool mostrandoMensagemFinal = false; 
 
     void Start()
     {
-        // Atualize para FindFirstObjectByType
-        if (dialogueUI == null)
-            dialogueUI = FindFirstObjectByType<DialogueUI2D>();
-
-        // Atualize para FindFirstObjectByType
-        // Tenta achar o PlayerController de forma segura (se tiver tag Player é melhor)
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null) playerController = player.GetComponent<PlayerController>();
+        dialogueUI = FindFirstObjectByType<DialogueUI2D>();
+        var p = GameObject.FindGameObjectWithTag("Player");
+        if(p) playerController = p.GetComponent<PlayerController>();
     }
 
     public void StartInteraction()
     {
         if (isInteracting || sentences.Length == 0) return;
-
         isInteracting = true;
         index = 0;
+        mostrandoMensagemFinal = false; // Reset
 
-        // --- LÓGICA DO CODEX (Já existia) ---
-        if (CodexManager.instance != null) 
-            CodexManager.instance.UnlockEntry(objectName);
+        // Codex
+        if (CodexManager.instance != null) CodexManager.instance.UnlockEntry(objectName);
 
-        // --- NOVA LÓGICA DE PROGRESSO DA FASE ---
+        // Fase 1: Contagem
         if (ehObjetivoDaFase && !jaFoiInspecionado)
         {
-            jaFoiInspecionado = true; // Marca como visto para não contar de novo
-            
-            if (GameManager.instance != null)
-            {
-                GameManager.instance.RegistrarInspecao();
-            }
+            jaFoiInspecionado = true;
+            if (GameManager.instance != null) GameManager.instance.RegistrarInspecao();
         }
-        // ----------------------------------------
 
-        if (freezePlayer && playerController != null)
-            playerController.enabled = false;
-
+        if (freezePlayer && playerController) playerController.enabled = false;
         dialogueUI.ShowDialogue(objectName, sentences[index], this);
     }
 
     public void NextSentence()
     {
         index++;
-        if (index < sentences.Length)
-        {
-            dialogueUI.UpdateText(sentences[index]);
-        }
-        else
-        {
-            EndInteraction();
-        }
+        if (index < sentences.Length) dialogueUI.UpdateText(sentences[index]);
+        else EndInteraction();
     }
 
     public void EndInteraction()
     {
-        isInteracting = false;
-        dialogueUI.HideDialogue(); // Fecha o texto da obra
+        // 1. Fecha o diálogo atual
+        dialogueUI.HideDialogue();
 
-        // --- NOVA LÓGICA ---
-        // Verifica se acabamos de completar a missão com essa obra
-        if (GameManager.instance != null && GameManager.instance.DeveAvisarConclusao())
+        // 2. Verifica se era a mensagem final especial
+        if (mostrandoMensagemFinal)
         {
-            // Abre o aviso do Camaleão
-            // Passamos 'null' no terceiro parâmetro pois é um pensamento, não uma interação repetível
-            dialogueUI.ShowDialogue("Camaleão", GameManager.instance.textoDeConclusao, null);
+            isInteracting = false;
+            if (freezePlayer && playerController) playerController.enabled = true;
             
-            // O Player continua travado porque abriu um novo diálogo
-            return; 
+            // Avisa o gerente que o player leu a mensagem final (Para Fase 2 trocar de cena)
+            if (GameManager.instance != null) GameManager.instance.AposMensagemConclusao();
+            return;
         }
-        // -------------------
 
-        if (freezePlayer && playerController != null)
-            playerController.enabled = true; // Destrava o player
+        // 3. Verifica se tem mensagem de conclusão pendente no Gerente
+        string msgFinal = null;
+        if (GameManager.instance != null) msgFinal = GameManager.instance.ObterMensagemDeConclusao();
+
+        if (msgFinal != null)
+        {
+            // Opa! Tem mensagem nova (ex: "Acabei tudo"). Mostra ela agora.
+            mostrandoMensagemFinal = true; // Marca flag
+            dialogueUI.ShowDialogue("Camaleão", msgFinal, this); // Reabre o diálogo
+        }
+        else
+        {
+            // Vida normal: acabou o papo, libera o player.
+            isInteracting = false;
+            if (freezePlayer && playerController) playerController.enabled = true;
+        }
     }
 }

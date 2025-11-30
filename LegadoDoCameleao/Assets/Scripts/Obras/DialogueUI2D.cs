@@ -34,9 +34,19 @@ public class DialogueUI2D : MonoBehaviour
             {
                 StopTypingInstantly();
             }
-            else if (currentSource != null)
+            else
             {
-                currentSource.NextSentence();
+                // SE TIVER DONO (NPC/Obra): Avança para a próxima frase dele
+                if (currentSource != null)
+                {
+                    currentSource.NextSentence();
+                }
+                // SE NÃO TIVER DONO (Mensagem do Sistema/GameManager):
+                else
+                {
+                    // Apenas fecha a caixa imediatamente
+                    HideDialogue();
+                }
             }
         }
     }

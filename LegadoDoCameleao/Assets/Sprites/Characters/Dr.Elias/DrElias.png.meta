@@ -1,19 +1,43 @@
 fileFormatVersion: 2
-guid: 8071f7f44aaf4f14a91eba9c5ad2753b
+guid: dfa2bd836a69c364b850378422276ec2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7018798754956375245
-    second: animated_door_big_3_32x32_0
+      213: 7109981304556028666
+    second: DrElias_0
   - first:
-      213: -6833690711089404788
-    second: animated_door_big_3_32x32_1
+      213: 5515045476535404479
+    second: DrElias_1
   - first:
-      213: -8926683871433034564
-    second: animated_door_big_3_32x32_2
+      213: 7660815249998250395
+    second: DrElias_2
   - first:
-      213: -8374947749517473287
-    second: animated_door_big_3_32x32_3
+      213: 2011987333793660932
+    second: DrElias_3
+  - first:
+      213: -5027909614691445450
+    second: DrElias_4
+  - first:
+      213: 7026231393033252950
+    second: DrElias_5
+  - first:
+      213: 6999654589311794400
+    second: DrElias_6
+  - first:
+      213: 2434552894307412791
+    second: DrElias_7
+  - first:
+      213: -4508489053793113585
+    second: DrElias_8
+  - first:
+      213: 7540215472777628797
+    second: DrElias_9
+  - first:
+      213: -8719869157689615017
+    second: DrElias_10
+  - first:
+      213: 1001412386014070039
+    second: DrElias_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -122,95 +146,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_0
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 33b0fd438b7389e90800000000000000
-      internalID: -7018798754956375245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_door_big_3_32x32_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c8421a4318ad921a0800000000000000
-      internalID: -6833690711089404788
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_door_big_3_32x32_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb47605805c0e1480800000000000000
-      internalID: -8926683871433034564
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_door_big_3_32x32_3
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9f9cd89e46536cb80800000000000000
-      internalID: -8374947749517473287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: animated_door_big_3_32x32_4
+      name: DrElias_0
       rect:
         serializedVersion: 2
         x: 0
@@ -223,16 +159,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 1f7016bd8149a8b4f9095650f3a5404b
-      internalID: 227545177
+      spriteID: af20bb1835abba260800000000000000
+      internalID: 7109981304556028666
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_5
+      name: DrElias_1
       rect:
         serializedVersion: 2
         x: 32
@@ -245,16 +181,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7fd1303bd14274b48a27fabf350b4b4e
-      internalID: 431691373
+      spriteID: fb7840514a0698c40800000000000000
+      internalID: 5515045476535404479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_6
+      name: DrElias_2
       rect:
         serializedVersion: 2
         x: 64
@@ -267,16 +203,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 301252b167031524b8bfbff9280a4d65
-      internalID: 814656028
+      spriteID: b918a0291eea05a60800000000000000
+      internalID: 7660815249998250395
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_7
+      name: DrElias_3
       rect:
         serializedVersion: 2
         x: 96
@@ -289,16 +225,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 41b204ff13045064b80611064ad9ee8a
-      internalID: 1052276182
+      spriteID: 4004b53f1d30ceb10800000000000000
+      internalID: 2011987333793660932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_8
+      name: DrElias_4
       rect:
         serializedVersion: 2
         x: 128
@@ -311,16 +247,38 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: fa391e2e46c55dd4ba1bfb18a768a6de
-      internalID: 295825610
+      spriteID: 6359b8d28d6493ab0800000000000000
+      internalID: -5027909614691445450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_9
+      name: DrElias_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650f173b930328160800000000000000
+      internalID: 7026231393033252950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DrElias_6
       rect:
         serializedVersion: 2
         x: 0
@@ -333,16 +291,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: fe9aea33b9e755942be572d5de7cf7d5
-      internalID: -35863921
+      spriteID: 0ecbc5263c4c32160800000000000000
+      internalID: 6999654589311794400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_10
+      name: DrElias_7
       rect:
         serializedVersion: 2
         x: 32
@@ -355,16 +313,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a1d7e388d4bddc1479011f5bf7778c7e
-      internalID: -552500789
+      spriteID: 73ba71465f449c120800000000000000
+      internalID: 2434552894307412791
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_11
+      name: DrElias_8
       rect:
         serializedVersion: 2
         x: 64
@@ -377,16 +335,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d4f8ebcfaf7c7de408c11b919457c689
-      internalID: -1753010750
+      spriteID: f0aace2b711ae61c0800000000000000
+      internalID: -4508489053793113585
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_12
+      name: DrElias_9
       rect:
         serializedVersion: 2
         x: 96
@@ -399,16 +357,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 3849da7585e959b4c881ec36903b839e
-      internalID: -1281205510
+      spriteID: d7c80d0d50a34a860800000000000000
+      internalID: 7540215472777628797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_door_big_3_32x32_13
+      name: DrElias_10
       rect:
         serializedVersion: 2
         x: 128
@@ -421,10 +379,32 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 99324102ce400d24aacfd5a4264ffc93
-      internalID: 333307473
+      spriteID: 75d9600733dccf680800000000000000
+      internalID: -8719869157689615017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DrElias_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7158b06624bb5ed00800000000000000
+      internalID: 1001412386014070039
       vertices: []
       indices: 
       edges: []
@@ -433,7 +413,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0dc5130f589f782478af885d5fc3cb6d
+    spriteID: 10a12f83a38d4954b90550d926bbc498
     internalID: 0
     vertices: []
     indices: 
@@ -445,20 +425,18 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      animated_door_big_3_32x32_0: -7018798754956375245
-      animated_door_big_3_32x32_1: -6833690711089404788
-      animated_door_big_3_32x32_10: -552500789
-      animated_door_big_3_32x32_11: -1753010750
-      animated_door_big_3_32x32_12: -1281205510
-      animated_door_big_3_32x32_13: 333307473
-      animated_door_big_3_32x32_2: -8926683871433034564
-      animated_door_big_3_32x32_3: -8374947749517473287
-      animated_door_big_3_32x32_4: 227545177
-      animated_door_big_3_32x32_5: 431691373
-      animated_door_big_3_32x32_6: 814656028
-      animated_door_big_3_32x32_7: 1052276182
-      animated_door_big_3_32x32_8: 295825610
-      animated_door_big_3_32x32_9: -35863921
+      DrElias_0: 7109981304556028666
+      DrElias_1: 5515045476535404479
+      DrElias_10: -8719869157689615017
+      DrElias_11: 1001412386014070039
+      DrElias_2: 7660815249998250395
+      DrElias_3: 2011987333793660932
+      DrElias_4: -5027909614691445450
+      DrElias_5: 7026231393033252950
+      DrElias_6: 6999654589311794400
+      DrElias_7: 2434552894307412791
+      DrElias_8: -4508489053793113585
+      DrElias_9: 7540215472777628797
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
