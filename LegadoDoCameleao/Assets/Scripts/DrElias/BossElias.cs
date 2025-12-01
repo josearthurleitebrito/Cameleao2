@@ -10,17 +10,28 @@ public class BossElias : MonoBehaviour
     [TextArea] 
     public string falaDaPrisao = "Acabou, Doutor. As luzes se apagaram para o seu show. A polícia já cercou o prédio.";
 
+    // Variáveis Privadas
     private bool playerPerto = false;
     private bool sequenciaFinalIniciada = false;
     private DialogueUI2D dialogueUI;
+    private Animator _animator; // Referência ao Animator do Elias
 
     void Start()
     {
         // Busca a UI de forma robusta
         dialogueUI = FindFirstObjectByType<DialogueUI2D>();
         
+        // Busca o Animator no próprio objeto
+        _animator = GetComponent<Animator>();
+
         if (dialogueUI == null) 
             Debug.LogError("BossElias não encontrou o DialogueUI2D na cena! O diálogo final não vai aparecer.");
+
+        // Garante que ele comece em Idle (Movimento = 0)
+        if (_animator != null)
+        {
+            _animator.SetInteger("Movimento", 0);
+        }
     }
 
     void Update()
@@ -49,7 +60,16 @@ public class BossElias : MonoBehaviour
 
         if (GameManager.instance.luzesApagadas)
         {
-            // WIN CONDITION
+            // WIN CONDITION: Luzes apagadas
+
+            // --- LÓGICA DE ANIMAÇÃO ---
+            // Toca a animação de 'Action' (susto/rendição) antes de abrir o diálogo
+            if (_animator != null)
+            {
+                _animator.SetInteger("Movimento", 2); 
+            }
+            // --------------------------
+
             if (dialogueUI != null)
             {
                 // Abre o diálogo e trava o script
@@ -66,7 +86,8 @@ public class BossElias : MonoBehaviour
         }
         else
         {
-            // LOSE CONDITION
+            // LOSE CONDITION: Luzes acesas
+            // Elias continua em Idle (0) pois ele não foi pego, ele que te pegou!
             Debug.Log("Elias te viu! Game Over.");
             GameManager.instance.GameOver();
         }

@@ -14021,7 +14021,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1766216571}
   m_HandleRect: {fileID: 1766216570}
   m_Direction: 0
-  m_Value: -0.000003680801
+  m_Value: -0.000007361602
   m_Size: 0.98616946
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14503,8 +14503,8 @@ GameObject:
   - component: {fileID: 851253357}
   - component: {fileID: 851253356}
   - component: {fileID: 851253355}
-  - component: {fileID: 851253354}
   - component: {fileID: 851253353}
+  - component: {fileID: 851253354}
   m_Layer: 0
   m_Name: PortaEntrada
   m_TagString: Untagged
@@ -14577,12 +14577,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bbf842b76f5b84aa4a67c1966842cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelExit
-  nomeProximaCena: Day2
+  nomeProximaCena: Day3
   teclaInteracao: 101
-  textoIncompleto: "Ainda sinto que deixei pistas para tr\xE1s. Preciso investigar
-    mais obras."
-  textoCompleto: "J\xE1 documentei tudo o que precisava aqui. Hora de sair antes
-    que me vejam."
+  textoIncompleto: "Sinto que algo ficou para tr\xE1s. Preciso olhar outras obras
+    com aten\xE7\xE3o."
+  textoCompleto: "J\xE1 deixei tudo registrado. Melhor dar o fora antes que me vejam."
 --- !u!61 &851253355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31607,6 +31606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2b95706e8f089478ec18f482a461a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  teclaInteracao: 101
   faseAtual: 1
   painelIntro: {fileID: 1864031367}
   tempoDuracaoIntro: 5
@@ -31616,6 +31616,12 @@ MonoBehaviour:
   totalObrasParaInspecionar: 2
   textoConclusaoFase1: "J\xE1 tenho provas suficientes. Preciso sair daqui agora."
   textoConclusaoFase2: "Descobri a falsifica\xE7\xE3o! O Dr. Elias est\xE1 no escrit\xF3rio."
+  textoInicioFase3: "O leil\xE3o ilegal j\xE1 come\xE7ou. A seguran\xE7a est\xE1
+    m\xE1xima. Preciso encontrar a Caixa de For\xE7a."
+  textoAposApagarLuz: "Escurid\xE3o total! O sistema caiu. \xC9 agora! Tenho que
+    render o Dr. Elias."
+  falaDaPrisao: "Acabou, Doutor. As luzes se apagaram para o seu show. A pol\xEDcia
+    j\xE1 cercou o pr\xE9dio e suas falsifica\xE7\xF5es foram expostas."
   luzesApagadas: 0
   tempoDeInvencibilidade: 2
 --- !u!1 &1233495535
@@ -35634,7 +35640,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -591.1805, y: 0.000303679}
+  m_AnchoredPosition: {x: -591.1804, y: 0.000303679}
   m_SizeDelta: {x: 1198.9431, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1696647794
@@ -36180,7 +36186,7 @@ Transform:
   m_GameObject: {fileID: 1828617732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.5, y: 29.5, z: 0}
+  m_LocalPosition: {x: -15.5, y: 29.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

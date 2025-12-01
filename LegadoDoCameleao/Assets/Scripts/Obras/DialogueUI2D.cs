@@ -12,22 +12,26 @@ public class DialogueUI2D : MonoBehaviour
     [Header("Configuração")]
     public float typingSpeed = 0.03f;
 
-    private InteractableObject currentSource; // Referência genérica
+    private InteractableObject currentSource; 
     private bool isTyping = false;
     private string currentSentence;
     private Coroutine typingCoroutine;
 
+    // Referência ao Player para travar movimento
+    private PlayerController playerController;
+
     void Start()
     {
         panel.SetActive(false);
+        
+        // Encontra o player automaticamente
+        playerController = FindFirstObjectByType<PlayerController>();
     }
 
     void Update()
     {
-        // Se o painel não está ativo, não faz nada
         if (!panel.activeSelf) return;
 
-        // Input para avançar texto (Espaço ou E)
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))
         {
             if (isTyping)
@@ -36,15 +40,12 @@ public class DialogueUI2D : MonoBehaviour
             }
             else
             {
-                // SE TIVER DONO (NPC/Obra): Avança para a próxima frase dele
                 if (currentSource != null)
                 {
                     currentSource.NextSentence();
                 }
-                // SE NÃO TIVER DONO (Mensagem do Sistema/GameManager):
                 else
                 {
-                    // Apenas fecha a caixa imediatamente
                     HideDialogue();
                 }
             }
@@ -53,8 +54,23 @@ public class DialogueUI2D : MonoBehaviour
 
     public void ShowDialogue(string title, string text, InteractableObject source)
     {
+        // --- TRAVA O JOGADOR ---
+        if (playerController != null)
+        {
+            playerController.enabled = false; // Desativa os inputs
+            
+            // Zera a velocidade para ele não deslizar se estiver andando
+            Rigidbody2D rb = playerController.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+            
+            // Opcional: Forçar animação de Idle
+            Animator anim = playerController.GetComponent<Animator>();
+            if (anim != null) anim.SetInteger("Movimento", 0);
+        }
+        // -----------------------
+
         currentSource = source;
-        nameText.text = title; // Pode ser nome do NPC ou Título da Obra
+        nameText.text = title; 
         panel.SetActive(true);
         DisplaySentence(text);
     }
@@ -68,6 +84,13 @@ public class DialogueUI2D : MonoBehaviour
     {
         panel.SetActive(false);
         currentSource = null;
+
+        // --- DESTRAVA O JOGADOR ---
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
+        // --------------------------
     }
 
     private void DisplaySentence(string sentence)

@@ -6420,8 +6420,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 260783893}
   m_HandleRect: {fileID: 260783892}
   m_Direction: 0
-  m_Value: 1.0000074
-  m_Size: 0.9861495
+  m_Value: 1.0000037
+  m_Size: 0.98616946
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9041,7 +9041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -607.7627, y: -0.000010967255}
+  m_AnchoredPosition: {x: -607.76263, y: -0.000010967255}
   m_SizeDelta: {x: 1198.9431, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1079878207
@@ -26151,9 +26151,8 @@ GameObject:
   - component: {fileID: 1388470932}
   - component: {fileID: 1388470937}
   - component: {fileID: 1388470936}
-  - component: {fileID: 1388470935}
-  - component: {fileID: 1388470934}
   - component: {fileID: 1388470933}
+  - component: {fileID: 1388470934}
   m_Layer: 0
   m_Name: PortaEntrada
   m_TagString: Untagged
@@ -26232,52 +26231,6 @@ MonoBehaviour:
     mais obras."
   textoCompleto: "J\xE1 documentei tudo o que precisava aqui. Hora de sair antes
     que me vejam."
---- !u!61 &1388470935
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388470931}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.49623156, y: -8.005884}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 4.989949, y: 2.043857}
-  m_EdgeRadius: 0
 --- !u!483693784 &1388470936
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -26782,37 +26735,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1439375963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1439375964}
-  m_Layer: 0
-  m_Name: _PUZZLES
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1439375964
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439375963}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451676565
 GameObject:
   m_ObjectHideFlags: 0
@@ -39712,6 +39634,5 @@ SceneRoots:
   - {fileID: 604404328}
   - {fileID: 192911201}
   - {fileID: 1071170459}
-  - {fileID: 1439375964}
   - {fileID: 1845495556}
   - {fileID: 724120963}

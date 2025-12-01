@@ -13,17 +13,17 @@ public class PoliceMovement : MonoBehaviour
     public float waitTimeAtPoint = 1.5f; 
 
     [Header("Configuração de Rota")]
-    [Tooltip("Arraste o objeto PAI dos waypoints aqui para preencher a lista automaticamente.")]
+    [Tooltip("Opcional: Arraste o objeto PAI dos waypoints aqui.")]
     public Transform patrolPathContainer; 
     
-    // Lista flexível (pode ser preenchida manualmente ou pelo container)
+    // Deixe vazia se quiser usar o Pathfinder Global
     public List<Transform> patrolPoints = new List<Transform>(); 
 
     [Header("Animações e Lanterna")]
     public Transform _lanternLightTransform;
     public float _lanternRotationOffset = 90f; 
 
-    // Estado Interno
+    // Variáveis Internas
     private int currentPointIndex = 0;
     private int previousPointIndex = -99; 
     private bool isWaiting = false;
@@ -31,11 +31,9 @@ public class PoliceMovement : MonoBehaviour
     private Vector3 targetPosition; 
     private Transform currentTargetNode;
 
-    // Sistema de Alerta (GPS)
     private Queue<Transform> alertPathQueue = new Queue<Transform>();
     private bool isRespondingToAlert = false;
 
-    // Animação
     [HideInInspector] public Vector2 CurrentDirection = Vector2.up; 
     private float _lastMoveX = 0f;
     private float _lastMoveY = 1f;
@@ -56,8 +54,7 @@ public class PoliceMovement : MonoBehaviour
             _npcRigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation; 
         }
 
-        // --- AUTO-PREENCHIMENTO DE ROTA ---
-        // Se um container foi arrastado, ignora a lista manual e usa os filhos do container
+        // Auto-Preenchimento (apenas se usar Container)
         if (patrolPathContainer != null)
         {
             patrolPoints.Clear();
@@ -68,78 +65,77 @@ public class PoliceMovement : MonoBehaviour
         }
     }
 
-    // Substitua o 'void Start' antigo por este 'IEnumerator Start'
-    // A Unity aceita Start como Coroutine automaticamente!
-    IEnumerator Start()
+    void Start()
     {
-         // 1. Atraso minúsculo para evitar conflito de processamento entre policiais
-         yield return new WaitForSeconds(Random.Range(0.05f, 0.2f));
-
-         // MODO 1: Rota Fixa (Fase 1 - Mantém igual se tiver pontos manuais)
+         // MODO 1: Rota Fixa (Manual)
          if (patrolPoints != null && patrolPoints.Count > 0)
          {
-            if (_reservationManager != null) _reservationManager.TryReserveNode(patrolPoints[currentPointIndex]);
-            currentTargetNode = patrolPoints[currentPointIndex];
-
-            transform.position = patrolPoints[currentPointIndex].position;
-            GoToNextPoint(false); 
+            // Acha o ponto mais próximo da rota fixa para começar
+            Transform pontoMaisPerto = GetClosestTransform(patrolPoints);
+            currentPointIndex = patrolPoints.IndexOf(pontoMaisPerto);
+            
+            IniciarMovimento(patrolPoints[currentPointIndex]);
          }
          else
          {
-             // MODO 2: Pathfinder Global (Fase 2 e 3 - Spawn Aleatório Único)
+             // MODO 2: Pathfinder Global (Vizinhos)
              if (_pathfinder != null && _pathfinder.allWaypoints.Length > 0)
              {
-                 bool encontrouVaga = false;
+                 // CORREÇÃO: Encontra qual nó do mapa está mais perto de onde coloquei o policial
+                 Transform startNode = GetClosestTransform(new List<Transform>(_pathfinder.allWaypoints));
                  
-                 // Cria uma lista temporária com todos os índices possíveis (0 a 8)
-                 List<int> indicesDisponiveis = new List<int>();
-                 for(int i=0; i < _pathfinder.allWaypoints.Length; i++) indicesDisponiveis.Add(i);
+                 // Atualiza o índice para o código saber onde estou
+                 currentPointIndex = _pathfinder.GetNodeIndex(startNode);
+                 
+                 // Debug para confirmar
+                 Debug.Log($"Policial {name} iniciou no nó: {currentPointIndex} ({startNode.name})");
 
-                 // Embaralha a lista (Shuffle manual simples)
-                 for (int i = 0; i < indicesDisponiveis.Count; i++) {
-                     int temp = indicesDisponiveis[i];
-                     int r = Random.Range(i, indicesDisponiveis.Count);
-                     indicesDisponiveis[i] = indicesDisponiveis[r];
-                     indicesDisponiveis[r] = temp;
-                 }
-
-                 // Percorre a lista embaralhada procurando uma sala vazia
-                 foreach (int index in indicesDisponiveis)
-                 {
-                     Transform nodeCandidato = _pathfinder.allWaypoints[index];
-
-                     // Tenta reservar. Se conseguir, ESSA é a minha sala.
-                     if (_reservationManager == null || _reservationManager.TryReserveNode(nodeCandidato))
-                     {
-                         // Achou vaga!
-                         currentTargetNode = nodeCandidato;
-                         currentPointIndex = index;
-                         transform.position = currentTargetNode.position; // Teleporta
-                         
-                         // Define o previousPointIndex para não voltar imediatamente
-                         previousPointIndex = currentPointIndex; 
-                         
-                         GoToNextPoint(false); // Começa a patrulha
-                         encontrouVaga = true;
-                         break;
-                     }
-                 }
-
-                 // Fallback de segurança: Se TUDO estiver lotado (improvável com 3 policiais e 9 salas)
-                 if (!encontrouVaga)
-                 {
-                     Debug.LogWarning($"Policial {name} não achou sala vazia! Nascendo na padrão.");
-                     currentTargetNode = _pathfinder.allWaypoints[0];
-                     transform.position = currentTargetNode.position;
-                     currentPointIndex = 0;
-                     GoToNextPoint(false);
-                 }
+                 IniciarMovimento(startNode);
              }
              else
              {
                  Debug.LogWarning($"O Policial '{name}' não tem rota nem Pathfinder configurado!");
              }
          }
+    }
+
+    void IniciarMovimento(Transform startNode)
+    {
+        currentTargetNode = startNode;
+        
+        // Se o policial já nasce em cima do ponto, tenta reservar
+        if (_reservationManager != null) _reservationManager.TryReserveNode(currentTargetNode);
+        
+        // Se ele estiver longe, anda até lá. Se estiver perto, já começa a patrulha.
+        if (Vector3.Distance(transform.position, currentTargetNode.position) > 0.5f)
+        {
+             SetTarget(currentTargetNode.position, patrolSpeed);
+        }
+        else
+        {
+             transform.position = currentTargetNode.position; // Garante posição exata
+             GoToNextPoint(false);
+        }
+    }
+
+    // Helper para achar o nó mais próximo da posição inicial
+    Transform GetClosestTransform(List<Transform> options)
+    {
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+
+        foreach(Transform potentialTarget in options)
+        {
+            Vector3 directionToTarget = potentialTarget.position - currentPos;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if(dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+        return bestTarget;
     }
 
     void FixedUpdate()
@@ -154,8 +150,6 @@ public class PoliceMovement : MonoBehaviour
         }
     }
     
-    // --- MOVIMENTO E ANIMAÇÃO ---
-
     public void SetStaticDirection(Vector2 direction)
     {
         StopMovement(); 
@@ -208,8 +202,7 @@ public class PoliceMovement : MonoBehaviour
         isWaiting = false;
     }
 
-    // --- SISTEMA DE ALERTA (GPS) ---
-
+    // --- ALERTA ---
     public void GoToAlertLocation(Vector3 alertPos)
     {
         if (_pathfinder == null) return;
@@ -243,7 +236,6 @@ public class PoliceMovement : MonoBehaviour
 
             if (_reservationManager != null) _reservationManager.TryReserveNode(nextStep);
 
-            // Atualiza índices para manter o grafo sincronizado
             int nextIndex = _pathfinder.GetNodeIndex(nextStep);
             previousPointIndex = currentPointIndex;
             currentPointIndex = nextIndex;
@@ -271,8 +263,7 @@ public class PoliceMovement : MonoBehaviour
         return closest;
     }
 
-    // --- SISTEMA DE PATRULHA (Híbrido) ---
-
+    // --- PATRULHA ---
     public IEnumerator WaitAndGoToNextPoint() 
     {
         yield return new WaitForSeconds(waitTimeAtPoint);
@@ -285,7 +276,7 @@ public class PoliceMovement : MonoBehaviour
         isRespondingToAlert = false; 
         isWaiting = false;
         
-        // 1. ROTA FIXA (Prioridade se configurada)
+        // MODO 1: Rota Fixa
         if (patrolPoints != null && patrolPoints.Count > 0)
         {
             if (_reservationManager != null && currentTargetNode != null)
@@ -299,7 +290,7 @@ public class PoliceMovement : MonoBehaviour
             return;
         }
 
-        // 2. PATHFINDER GLOBAL (Se não tiver rota fixa)
+        // MODO 2: Pathfinder Global
         if (_pathfinder == null || _pathfinder.allWaypoints.Length == 0) return;
 
         if (_reservationManager != null && currentTargetNode != null)
@@ -319,7 +310,6 @@ public class PoliceMovement : MonoBehaviour
 
         if (validTargets.Count > 0)
         {
-            // Shuffle manual
             for (int i = 0; i < validTargets.Count; i++) {
                  Transform temp = validTargets[i];
                  int r = Random.Range(i, validTargets.Count);
@@ -337,7 +327,6 @@ public class PoliceMovement : MonoBehaviour
             }
         }
 
-        // Fallback: Se tudo ocupado, fica onde está ou tenta de novo
         if (nextTarget == null)
         {
             if (_reservationManager != null) _reservationManager.TryReserveNode(_pathfinder.allWaypoints[currentPointIndex]);
@@ -352,6 +341,11 @@ public class PoliceMovement : MonoBehaviour
         currentPointIndex = newPointIndex; 
         currentTargetNode = nextTarget;
 
+        if (true) // Pode usar sua variável 'mostrarDebug' se tiver criado uma
+        {
+            Debug.Log($"<color=cyan>[POLICIAL {name}]</color> Escolhi ir para o Vizinho: <b>{nextTarget.name}</b> (Index: {newPointIndex})");
+        }
+
         SetTarget(nextTarget.position, patrolSpeed);
     }
     
@@ -363,27 +357,21 @@ public class PoliceMovement : MonoBehaviour
              _reservationManager.FreeNode(currentTargetNode);
     }
     
-    // --- HELPERS VISUAIS ---
-
     void UpdateAnimation(Vector2 moveDirection)
     {
         if (_npcAnimator == null) return;
-
-        if (moveDirection.sqrMagnitude < 0.01f) 
-        {
+        if (moveDirection.sqrMagnitude < 0.01f) {
             _npcAnimator.SetInteger("Movimento", 0); 
             _npcAnimator.SetFloat("LastMoveX", _lastMoveX);
             _npcAnimator.SetFloat("LastMoveY", _lastMoveY);
             RotateLanternToDirection(new Vector2(_lastMoveX, _lastMoveY));
             return;
         }
-        
         _npcAnimator.SetInteger("Movimento", 1); 
         _npcAnimator.SetFloat("AxisX", moveDirection.x);
         _npcAnimator.SetFloat("AxisY", moveDirection.y);
         _lastMoveX = moveDirection.x;
         _lastMoveY = moveDirection.y;
-        
         RotateLanternToDirection(moveDirection);
     }
 
