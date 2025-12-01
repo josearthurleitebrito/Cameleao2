@@ -271,10 +271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Ferramentas De Escavacao
   sentences:
-  - "An\xE1lise T\xE1til: O cabo do pincel de fibra \xF3tica tem marcas de corros\xE3o
-    por \xE1cido ac\xE9tico (o mesmo do vaso grande corrompido). "
-  - 'Pista: Essas ferramentas foram usadas recentemente para danificar e substituir
-    os artefatos.'
+  - "Contamina\xE7\xE3o qu\xEDmica superficial. Res\xEDduos de \xC1cido Ac\xE9tico
+    concentrado encontrados nas ranhuras. Evid\xEAncia de corros\xE3o intencional
+    recente."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &41097736
@@ -8807,10 +8806,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Est\xE1tuas de Povos Antigos"
   sentences:
-  - "Vigil\xE2ncia de C\xE2meras: H\xE1 um \xE2ngulo morto suspeito nas c\xE2meras
-    de seguran\xE7a que d\xE1 para o suporte da Est\xE1tua 3. O sistema foi ajustado
-    ontem."
-  - "Pista: Este local \xE9 um ponto de coleta ou de acesso secreto."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &290816307
@@ -8917,6 +8915,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &293430117
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1237182957}
+    m_Modifications:
+    - target: {fileID: 3882612427458117700, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_Name
+      value: LevelFade
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.59182
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.64579
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+--- !u!4 &293430118 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5766237717551098724, guid: f466a6ddeee090c4e817be88b5425d72, type: 3}
+  m_PrefabInstance: {fileID: 293430117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &294936171
 GameObject:
   m_ObjectHideFlags: 0
@@ -8998,10 +9058,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Ferramentas De Escavacao
   sentences:
-  - "An\xE1lise T\xE1til: O cabo do pincel de fibra \xF3tica tem marcas de corros\xE3o
-    por \xE1cido ac\xE9tico (o mesmo do vaso grande corrompido). "
-  - 'Pista: Essas ferramentas foram usadas recentemente para danificar e substituir
-    os artefatos.'
+  - "Contamina\xE7\xE3o qu\xEDmica superficial. Res\xEDduos de \xC1cido Ac\xE9tico
+    concentrado encontrados nas ranhuras. Evid\xEAncia de corros\xE3o intencional
+    recente."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &312537120
@@ -9226,10 +9285,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Est\xE1tuas de Povos Antigos"
   sentences:
-  - "Vigil\xE2ncia de C\xE2meras: H\xE1 um \xE2ngulo morto suspeito nas c\xE2meras
-    de seguran\xE7a que d\xE1 para o suporte da Est\xE1tua 3. O sistema foi ajustado
-    ontem."
-  - "Pista: Este local \xE9 um ponto de coleta ou de acesso secreto."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &322278383
@@ -9462,7 +9520,7 @@ Transform:
   m_GameObject: {fileID: 404716297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.69, y: 13.76, z: -10}
+  m_LocalPosition: {x: -2.5, y: -6.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9610,11 +9668,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "F\xF3sseis Pequenos"
   sentences:
-  - "Digitaliza\xE7\xE3o de Arquivo: Os data tags f\xEDsicos indicam aquisi\xE7\xE3o
-    em 2035, mas os registros digitais internos apontam para 1985. "
-  - "Conflito de ID Detectado: Um pequeno osso (F\xEDbula 37B) parece ser org\xE2nico
-    e n\xE3o mineralizado. "
-  - "Suspeita: Um osso humano moderno foi misturado \xE0 cole\xE7\xE3o."
+  - "Inconsist\xEAncia de data\xE7\xE3o. Estrutura n\xE3o mineralizada detectada.
+    Presen\xE7a de col\xE1geno recente. Alerta: Fragmento \xF3sseo humano moderno
+    identificado."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &419408637
@@ -9754,7 +9810,7 @@ RectTransform:
   m_Father: {fileID: 104072981}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10054,10 +10110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "F\xF3ssil de Argentinossauro"
   sentences:
-  - "Scanner (Tens\xE3o Estrutural): A base de suporte est\xE1 mostrando sinais de
-    tens\xE3o desnecess\xE1ria. O centro de massa da r\xE9plica foi deslocado em
-    80 cent\xEDmetros da posi\xE7\xE3o original. Isso n\xE3o \xE9 um erro de montagem;
-    \xE9 uma prepara\xE7\xE3o para movimento r\xE1pido."
+  - "Tens\xE3o estrutural cr\xEDtica. O centro de gravidade n\xE3o corresponde \xE0
+    anatomia natural. Pontos de apoio refor\xE7ados. Esqueleto modificado para desmontagem
+    r\xE1pida."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &473797483
@@ -10195,7 +10250,7 @@ Transform:
   m_GameObject: {fileID: 480456918}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.69, y: 13.76, z: 0}
+  m_LocalPosition: {x: -2.5, y: -6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10427,11 +10482,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "F\xF3sseis Pequenos"
   sentences:
-  - "Digitaliza\xE7\xE3o de Arquivo: Os data tags f\xEDsicos indicam aquisi\xE7\xE3o
-    em 2035, mas os registros digitais internos apontam para 1985. "
-  - "Conflito de ID Detectado: Um pequeno osso (F\xEDbula 37B) parece ser org\xE2nico
-    e n\xE3o mineralizado. "
-  - "Suspeita: Um osso humano moderno foi misturado \xE0 cole\xE7\xE3o."
+  - "Inconsist\xEAncia de data\xE7\xE3o. Estrutura n\xE3o mineralizada detectada.
+    Presen\xE7a de col\xE1geno recente. Alerta: Fragmento \xF3sseo humano moderno
+    identificado."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &481877018
@@ -12107,9 +12160,9 @@ RectTransform:
   m_Father: {fileID: 2054345372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: -17}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &561285945
 MonoBehaviour:
@@ -13206,11 +13259,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Grande Antigo Corrompido
   sentences:
-  - "An\xE1lise Qu\xEDmica: A crosta escura no vaso n\xE3o \xE9 p\xE1tina. \xC9 um
-    res\xEDduo de \xE1cido ac\xE9tico (vinagre) em alta concentra\xE7\xE3o. "
-  - "Incongru\xEAncia: Tentativa deliberada de ocultar a arte original."
+  - "Contamina\xE7\xE3o qu\xEDmica superficial. Res\xEDduos de \xC1cido Ac\xE9tico
+    concentrado encontrados nas ranhuras. Evid\xEAncia de corros\xE3o intencional
+    recente."
   freezePlayer: 1
-  ehObjetivoDaFase: 1
+  ehObjetivoDaFase: 0
 --- !u!61 &663147411
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13813,7 +13866,7 @@ Transform:
   m_GameObject: {fileID: 737123969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.69, y: 13.76, z: -10}
+  m_LocalPosition: {x: -2.501805, y: -4.00356, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14322,9 +14375,9 @@ RectTransform:
   m_Father: {fileID: 2054345372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: -17, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &789778362
 MonoBehaviour:
@@ -14369,8 +14422,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1766216571}
   m_HandleRect: {fileID: 1766216570}
   m_Direction: 0
-  m_Value: -0.000011042403
-  m_Size: 0.98616946
+  m_Value: 0
+  m_Size: 0.98616844
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14531,11 +14584,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "F\xF3sseis Pequenos"
   sentences:
-  - "Digitaliza\xE7\xE3o de Arquivo: Os data tags f\xEDsicos indicam aquisi\xE7\xE3o
-    em 2035, mas os registros digitais internos apontam para 1985. "
-  - "Conflito de ID Detectado: Um pequeno osso (F\xEDbula 37B) parece ser org\xE2nico
-    e n\xE3o mineralizado. "
-  - "Suspeita: Um osso humano moderno foi misturado \xE0 cole\xE7\xE3o."
+  - "Inconsist\xEAncia de data\xE7\xE3o. Estrutura n\xE3o mineralizada detectada.
+    Presen\xE7a de col\xE1geno recente. Alerta: Fragmento \xF3sseo humano moderno
+    identificado."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &804044528
@@ -15061,7 +15112,8 @@ MonoBehaviour:
   teclaInteracao: 101
   textoIncompleto: "Sinto que algo ficou para tr\xE1s. Preciso olhar outras obras
     com aten\xE7\xE3o."
-  textoCompleto: "J\xE1 deixei tudo registrado. Melhor dar o fora antes que me vejam."
+  textoCompleto: "Descobri a falsifica\xE7\xE3o! O Dr. Elias est\xE1 no escrit\xF3rio.
+    Amanh\xE3 acabo com seus planos!"
 --- !u!61 &851253355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15096,7 +15148,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.49623156, y: -8.005884}
+  m_Offset: {x: 0.51840454, y: -8.005884}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -15106,7 +15158,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.989949, y: 2.043857}
+  m_Size: {x: 3.7039309, y: 2.0438576}
   m_EdgeRadius: 0
 --- !u!483693784 &851253356
 TilemapRenderer:
@@ -15701,11 +15753,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "F\xF3sseis Pequenos"
   sentences:
-  - "Digitaliza\xE7\xE3o de Arquivo: Os data tags f\xEDsicos indicam aquisi\xE7\xE3o
-    em 2035, mas os registros digitais internos apontam para 1985. "
-  - "Conflito de ID Detectado: Um pequeno osso (F\xEDbula 37B) parece ser org\xE2nico
-    e n\xE3o mineralizado. "
-  - "Suspeita: Um osso humano moderno foi misturado \xE0 cole\xE7\xE3o."
+  - "Inconsist\xEAncia de data\xE7\xE3o. Estrutura n\xE3o mineralizada detectada.
+    Presen\xE7a de col\xE1geno recente. Alerta: Fragmento \xF3sseo humano moderno
+    identificado."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &967589569
@@ -32048,10 +32098,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Ferramentas De Escavacao
   sentences:
-  - "An\xE1lise T\xE1til: O cabo do pincel de fibra \xF3tica tem marcas de corros\xE3o
-    por \xE1cido ac\xE9tico (o mesmo do vaso grande corrompido). "
-  - 'Pista: Essas ferramentas foram usadas recentemente para danificar e substituir
-    os artefatos.'
+  - "Contamina\xE7\xE3o qu\xEDmica superficial. Res\xEDduos de \xC1cido Ac\xE9tico
+    concentrado encontrados nas ranhuras. Evid\xEAncia de corros\xE3o intencional
+    recente."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1210244669
@@ -32202,22 +32251,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2b95706e8f089478ec18f482a461a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  teclaInteracao: 101
   faseAtual: 1
-  painelIntro: {fileID: 1864031367}
+  painelIntro: {fileID: 874327713}
   tempoDuracaoIntro: 5
   painelPause: {fileID: 671407193}
   painelGameOver: {fileID: 2075954050}
   painelVitoria: {fileID: 0}
   totalObrasParaInspecionar: 2
-  textoConclusaoFase1: "J\xE1 tenho provas suficientes. Preciso sair daqui agora."
-  textoConclusaoFase2: "Descobri a falsifica\xE7\xE3o! O Dr. Elias est\xE1 no escrit\xF3rio."
+  nomeCenaFase3: Day3
+  textoInicioFase1: Cheguei. Preciso me misturar aos visitantes e inspecionar as
+    obras para encontrar irregularidades.
+  textoInicioFase2: "O museu fechou. Agora \xE9 hora de encontrar a obra falsificada
+    e corrigir o erro sem ser visto pelos guardas."
   textoInicioFase3: "O leil\xE3o ilegal j\xE1 come\xE7ou. A seguran\xE7a est\xE1
     m\xE1xima. Preciso encontrar a Caixa de For\xE7a."
+  textoConclusaoFase1: "J\xE1 tenho provas suficientes. Preciso sair daqui agora."
+  textoConclusaoFase2: "Descobri a falsifica\xE7\xE3o! O Dr. Elias est\xE1 no escrit\xF3rio.
+    Amanh\xE3 acabo com seus planos!"
   textoAposApagarLuz: "Escurid\xE3o total! O sistema caiu. \xC9 agora! Tenho que
     render o Dr. Elias."
-  falaDaPrisao: "Acabou, Doutor. As luzes se apagaram para o seu show. A pol\xEDcia
-    j\xE1 cercou o pr\xE9dio e suas falsifica\xE7\xF5es foram expostas."
   luzesApagadas: 0
   tempoDeInvencibilidade: 2
 --- !u!1 &1233495535
@@ -32284,7 +32336,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1231952637}
-  - {fileID: 1284697475}
+  - {fileID: 293430118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238505299
@@ -32515,10 +32567,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Quadros com Esp\xE9cies de Borboleta"
   sentences:
-  - "An\xE1lise de Moldura: A parte inferior da moldura do quadro Morpho Menelaus
-    foi ligeiramente serrada e recolada. O scanner detecta um pequeno chip RFID embutido."
-  - "Pista: A moldura est\xE1 sendo usada como dispositivo de rastreamento ou de
-    alerta."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &1248245592
@@ -32555,7 +32606,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.91841507}
+  m_Offset: {x: -0.28480148, y: -0.91841507}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -32565,7 +32616,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.875, y: 3.1805801}
+  m_Size: {x: 1.444603, y: 3.1805801}
   m_EdgeRadius: 0
 --- !u!212 &1248245593
 SpriteRenderer:
@@ -32655,7 +32706,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1237182957}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1284697476
 MonoBehaviour:
@@ -32810,10 +32861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Pequeno Rosa
   sentences:
-  - "Scanner (Peso/Densidade): Os vasos Rosa e Corrompido t\xEAm o peso correto.
-    O vaso Prata e Dourado s\xE3o 15% mais leves do que o esperado. "
-  - "Pista: Eles cont\xEAm um n\xFAcleo oco. N\xE3o s\xE3o cer\xE2micas rituais,
-    s\xE3o r\xE9plicas vazias para facilitar o transporte (substitui\xE7\xE3o imediata)."
+  - "Alerta de densidade. Peso 15% abaixo do padr\xE3o para cer\xE2mica maci\xE7a.
+    Leitura de sonar indica n\xFAcleo oco. Prov\xE1vel r\xE9plica de transporte."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1287679610
@@ -33002,10 +33051,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Pequeno Bronze
   sentences:
-  - "Scanner (Peso/Densidade): Os vasos Rosa e Corrompido t\xEAm o peso correto.
-    O vaso Prata e Dourado s\xE3o 15% mais leves do que o esperado. "
-  - "Pista: Eles cont\xEAm um n\xFAcleo oco. N\xE3o s\xE3o cer\xE2micas rituais,
-    s\xE3o r\xE9plicas vazias para facilitar o transporte (substitui\xE7\xE3o imediata)."
+  - "Alerta de densidade. Peso 15% abaixo do padr\xE3o para cer\xE2mica maci\xE7a.
+    Leitura de sonar indica n\xFAcleo oco. Prov\xE1vel r\xE9plica de transporte."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1306707023
@@ -34206,11 +34253,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: A Noite Estrelada
   sentences:
-  - "Anomalia de Pigmento: Uma amostra digital r\xE1pida revela que o pigmento azul
-    no canto superior direito \xE9 quimicamente diferente. "
-  - "Incongru\xEAncia: O pigmento \xE9 \xE0 base de \xF3xido de cobalto (usado em
-    falsifica\xE7\xF5es), n\xE3o o azul ultramarino natural da \xE9poca. \xC9 uma
-    falsifica\xE7\xE3o parcial."
+  - "Erro na composi\xE7\xE3o qu\xEDmica. Pigmentos e substrato cont\xEAm elementos
+    sint\xE9ticos p\xF3s-industriais. Material anacr\xF4nico: Falsifica\xE7\xE3o
+    confirmada."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &1384014227
@@ -34738,10 +34783,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Quadros com Esp\xE9cies de Borboleta"
   sentences:
-  - "An\xE1lise de Moldura: A parte inferior da moldura do quadro Morpho Menelaus
-    foi ligeiramente serrada e recolada. O scanner detecta um pequeno chip RFID embutido."
-  - "Pista: A moldura est\xE1 sendo usada como dispositivo de rastreamento ou de
-    alerta."
+  - "Anomalia na moldura. Descontinuidade na madeira detectada na base inferior.
+    Sinal de r\xE1dio passivo isolado. Dispositivo eletr\xF4nico oculto na estrutura."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1463617666
@@ -35028,10 +35071,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Pequeno Corrompido
   sentences:
-  - "Scanner (Peso/Densidade): Os vasos Rosa e Corrompido t\xEAm o peso correto.
-    O vaso Prata e Dourado s\xE3o 15% mais leves do que o esperado. "
-  - "Pista: Eles cont\xEAm um n\xFAcleo oco. N\xE3o s\xE3o cer\xE2micas rituais,
-    s\xE3o r\xE9plicas vazias para facilitar o transporte (substitui\xE7\xE3o imediata)."
+  - "Alerta de densidade. Peso 15% abaixo do padr\xE3o para cer\xE2mica maci\xE7a.
+    Leitura de sonar indica n\xFAcleo oco. Prov\xE1vel r\xE9plica de transporte."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1473990531
@@ -35156,7 +35197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1489741543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35458,9 +35499,9 @@ RectTransform:
   m_Father: {fileID: 2054345372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1569785007
 MonoBehaviour:
@@ -35898,10 +35939,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Est\xE1tuas de Povos Antigos"
   sentences:
-  - "Vigil\xE2ncia de C\xE2meras: H\xE1 um \xE2ngulo morto suspeito nas c\xE2meras
-    de seguran\xE7a que d\xE1 para o suporte da Est\xE1tua 3. O sistema foi ajustado
-    ontem."
-  - "Pista: Este local \xE9 um ponto de coleta ou de acesso secreto."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1667494964
@@ -36056,11 +36096,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Representa\xE7\xE3o do Triceratopo"
   sentences:
-  - "An\xE1lise de Materiais: A camada de tinta superficial possui pol\xEDmeros modernos
-    de secagem r\xE1pida (uso externo), n\xE3o o material de conserva\xE7\xE3o padr\xE3o
-    do museu."
-  - "Alerta: Este modelo est\xE1 pronto para ser transportado ou exposto a condi\xE7\xF5es
-    clim\xE1ticas vari\xE1veis."
+  - "Material de superf\xEDcie inv\xE1lido. Pol\xEDmeros sint\xE9ticos de uso externo
+    detectados na pintura. Revestimento moderno incompat\xEDvel com conserva\xE7\xE3o
+    de museu."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &1671320488
@@ -36449,8 +36487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -591.18036, y: 0.000303679}
-  m_SizeDelta: {x: 1198.9431, y: 0}
+  m_AnchoredPosition: {x: -591.18054, y: 0.000303679}
+  m_SizeDelta: {x: 1198.9431, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1696647794
 MonoBehaviour:
@@ -36894,7 +36932,7 @@ RectTransform:
   m_Father: {fileID: 163165501}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.98616844, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -37221,7 +37259,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!224 &1864031371
 RectTransform:
@@ -37508,10 +37546,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Pequeno Prata
   sentences:
-  - "Scanner (Peso/Densidade): Os vasos Rosa e Corrompido t\xEAm o peso correto.
-    O vaso Prata e Dourado s\xE3o 15% mais leves do que o esperado. "
-  - "Pista: Eles cont\xEAm um n\xFAcleo oco. N\xE3o s\xE3o cer\xE2micas rituais,
-    s\xE3o r\xE9plicas vazias para facilitar o transporte (substitui\xE7\xE3o imediata)."
+  - "Alerta de densidade. Peso 15% abaixo do padr\xE3o para cer\xE2mica maci\xE7a.
+    Leitura de sonar indica n\xFAcleo oco. Prov\xE1vel r\xE9plica de transporte."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1907842565
@@ -37777,10 +37813,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Est\xE1tuas de Povos Antigos"
   sentences:
-  - "Vigil\xE2ncia de C\xE2meras: H\xE1 um \xE2ngulo morto suspeito nas c\xE2meras
-    de seguran\xE7a que d\xE1 para o suporte da Est\xE1tua 3. O sistema foi ajustado
-    ontem."
-  - "Pista: Este local \xE9 um ponto de coleta ou de acesso secreto."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1928429702
@@ -38115,10 +38150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: "Quadros com Esp\xE9cies de Borboleta"
   sentences:
-  - "An\xE1lise de Moldura: A parte inferior da moldura do quadro Morpho Menelaus
-    foi ligeiramente serrada e recolada. O scanner detecta um pequeno chip RFID embutido."
-  - "Pista: A moldura est\xE1 sendo usada como dispositivo de rastreamento ou de
-    alerta."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 0
 --- !u!61 &1953917177
@@ -38839,10 +38873,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1696647793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 599.47156, y: -50}
+  m_SizeDelta: {x: 1198.9431, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2080795732
 PrefabInstance:
@@ -39098,11 +39132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
   objectName: Vaso Grande Antigo Rosa
   sentences:
-  - "Verifica\xE7\xE3o de Publica\xE7\xE3o: A documenta\xE7\xE3o hist\xF3rica do
-    Dr. Elias (Artigo 2034-B) afirma que a cor deste vaso \xE9 'imposs\xEDvel de
-    ser alcan\xE7ada sem aditivos modernos'. Contudo, a an\xE1lise de pigmento prova
-    o contr\xE1rio."
-  - "Alerta: Elias est\xE1 publicando desinforma\xE7\xE3o ativa sobre esta pe\xE7a."
+  - "Varredura conclu\xEDda. Nenhuma anomalia estrutural ou est\xE9tica detectada.
+    A documenta\xE7\xE3o bate com o objeto f\xEDsico. Item autenticado e liberado
+    para o leil\xE3o."
   freezePlayer: 1
   ehObjetivoDaFase: 1
 --- !u!61 &2082322686
@@ -39748,6 +39780,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 737123972}
   - {fileID: 2146202900}
+  - {fileID: 1460817476}
   - {fileID: 1237182957}
   - {fileID: 834924607}
   - {fileID: 1926609196}
@@ -39755,4 +39788,4 @@ SceneRoots:
   - {fileID: 1961904419}
   - {fileID: 1365150897}
   - {fileID: 800463951}
-  - {fileID: 1460817476}
+  - {fileID: 1284697475}

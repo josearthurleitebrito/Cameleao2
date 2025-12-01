@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement; // Necessário para detectar troca de cena
 
 public class CodexManager : MonoBehaviour
 {
@@ -11,9 +12,7 @@ public class CodexManager : MonoBehaviour
     public class CodexEntry
     {
         [Header("Configuração")]
-        // AGORA É UMA LISTA! Pode adicionar quantos nomes quiser aqui.
         public List<string> idNames; 
-        
         public string title;
         [TextArea(3, 10)]
         public string description;
@@ -32,52 +31,60 @@ public class CodexManager : MonoBehaviour
 
     void Awake()
     {
-        // Padrão Singleton com persistência entre cenas
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // <--- A MÁGICA ACONTECE AQUI
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // Se já existe um Codex vindo da fase anterior, destrói este novo (da fase atual)
-            // para manter os dados do antigo.
             Destroy(gameObject);
         }
     }
 
+    // --- CORREÇÃO AQUI: Se inscrever no evento de troca de cena ---
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Roda toda vez que uma nova fase carrega
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        isOpen = false; // Reseta o estado lógico
+        if (codexPanel != null) codexPanel.SetActive(false); // Reseta o visual
+    }
+    // -------------------------------------------------------------
+
     void Start()
     {
-        codexPanel.SetActive(false);
-        textTemplate.SetActive(false);
+        if(codexPanel != null) codexPanel.SetActive(false);
+        if(textTemplate != null) textTemplate.SetActive(false);
     }
 
     public void ToggleCodex()
     {
         isOpen = !isOpen;
-        codexPanel.SetActive(isOpen);
-
-        if (isOpen)
-        {
-            UpdateUI();
-        }
+        if (codexPanel != null) codexPanel.SetActive(isOpen);
+        if (isOpen) UpdateUI();
     }
 
-    // Chamado quando o jogador interage com a obra
     public void UnlockEntry(string objectName)
     {
         foreach (var entry in allEntries)
         {
-            // NOVA VERIFICAÇÃO: Checa se a lista de IDs contém o nome do objeto
             if (entry.idNames.Contains(objectName))
             {
                 if (!entry.isUnlocked)
                 {
                     entry.isUnlocked = true;
-                    Debug.Log("Codex Desbloqueado: " + entry.title);
-                    // Dica: Aqui você pode adicionar um som de "conquista"
                 }
-                break; // Encontrou e desbloqueou, pode parar de procurar
+                break; 
             }
         }
     }
@@ -86,8 +93,7 @@ public class CodexManager : MonoBehaviour
     {
         foreach (Transform child in contentArea)
         {
-            if (child.gameObject != textTemplate)
-                Destroy(child.gameObject);
+            if (child.gameObject != textTemplate) Destroy(child.gameObject);
         }
 
         foreach (var entry in allEntries)
@@ -96,7 +102,6 @@ public class CodexManager : MonoBehaviour
             {
                 GameObject newItem = Instantiate(textTemplate, contentArea);
                 newItem.SetActive(true);
-                
                 TMP_Text itemText = newItem.GetComponent<TMP_Text>();
                 itemText.text = $"<b><size=120%>{entry.title}</size></b>\n{entry.description}\n----------------";
             }

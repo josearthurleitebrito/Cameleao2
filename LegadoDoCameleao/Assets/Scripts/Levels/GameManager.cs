@@ -1,14 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections; 
 
 public enum GamePhase { Fase1_Inspecao, Fase2_Puzzle, Fase3_Final }
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    [Header("Interação")]
-    public KeyCode teclaInteracao = KeyCode.E;
 
     [Header("Configuração Geral")]
     public GamePhase faseAtual;
@@ -24,21 +22,24 @@ public class GameManager : MonoBehaviour
     public int totalObrasParaInspecionar;
     private int obrasInspecionadas = 0;
 
-    [Header("Mensagens de Conclusão (Fases 1 e 2)")]
-    [TextArea] public string textoConclusaoFase1 = "Já tenho provas suficientes. Preciso sair daqui agora.";
-    [TextArea] public string textoConclusaoFase2 = "Achei o erro na pintura! O Dr. Elias está no escritório. Preciso ir para a porta de acesso.";
+    [Header("Fase 2: Puzzle")]
+    public string nomeCenaFase3; 
 
-    [Header("Fase 3: Narrativa")]
+    // --- AQUI ESTÃO AS VARIÁVEIS QUE DEVEM FICAR FORA DO START ---
+    [Header("Mensagens de Início (Objetivos)")]
+    [TextArea] public string textoInicioFase1 = "Cheguei. Preciso me misturar aos visitantes e inspecionar as obras para encontrar irregularidades.";
+    [TextArea] public string textoInicioFase2 = "O museu fechou. Agora é hora de encontrar a obra falsificada e corrigir o erro sem ser visto pelos guardas.";
     [TextArea] public string textoInicioFase3 = "O leilão ilegal já começou. A segurança está máxima. Preciso encontrar a Caixa de Força.";
-    [TextArea] public string textoAposApagarLuz = "Escuridão total! O sistema caiu. É agora! Tenho que render o Dr. Elias.";
 
-    [Header("Diálogo Final")]
-    [TextArea] 
-    public string falaDaPrisao = "Acabou, Doutor. As luzes se apagaram para o seu show. A polícia já cercou o prédio e suas falsificações foram expostas.";
+    [Header("Mensagens de Conclusão")]
+    [TextArea] public string textoConclusaoFase1 = "Já tenho provas suficientes. Preciso sair daqui agora.";
+    [TextArea] public string textoConclusaoFase2 = "Descobri a falsificação! O Dr. Elias está no escritório. Preciso ir para a porta de acesso.";
+    [TextArea] public string textoAposApagarLuz = "Escuridão total! O sistema caiu. É agora! Tenho que render o Dr. Elias.";
+    // -------------------------------------------------------------
 
     // --- Controle Interno ---
-    private bool mensagemPendente = false; // "Tem uma mensagem para mostrar?"
-    private bool faseConcluida = false;    // "A porta está aberta?"
+    private bool mensagemPendente = false;
+    private bool faseConcluida = false;
     public bool luzesApagadas = false;     
     
     private bool jogoPausado = false;
@@ -46,8 +47,6 @@ public class GameManager : MonoBehaviour
     
     public float tempoDeInvencibilidade = 2.0f;
     private float tempoDeJogo = 0f;
-    private bool playerPerto = false;
-    private bool sequenciaFinalIniciada = false;
 
     private DialogueUI2D dialogueUI;
 
@@ -67,15 +66,17 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 1f; 
 
+        // --- FLUXO DE INÍCIO ---
         if (painelIntro != null)
         {
             painelIntro.SetActive(true);
             Time.timeScale = 0f; 
-            StartCoroutine(FecharIntroAutomaticamente());
+            StartCoroutine(FecharAtroAutomaticamente());
         }
         else
         {
-            VerificarDialogoInicial();
+            // Se não tem intro, começa direto com o diálogo
+            StartCoroutine(IniciarDialogoComAtraso(1.0f));
         }
     }
 
@@ -87,28 +88,11 @@ public class GameManager : MonoBehaviour
         {
             if (painelIntro == null || !painelIntro.activeSelf) TogglePause();
         }
-
-        // 1. Se a sequência final começou, monitora se o jogador fechou o diálogo
-        if (sequenciaFinalIniciada)
-        {
-            // Se o painel de diálogo fechou (player terminou de ler)
-            if (dialogueUI != null && !dialogueUI.panel.activeSelf)
-            {
-                FinalizarJogo();
-            }
-            return;
-        }
-
-        // 2. Interação normal
-        if (playerPerto && Input.GetKeyDown(teclaInteracao))
-        {
-            Confrontar();
-        }
     }
 
     // --- SISTEMA DE UI ---
 
-    System.Collections.IEnumerator FecharIntroAutomaticamente()
+    IEnumerator FecharAtroAutomaticamente()
     {
         yield return new WaitForSecondsRealtime(tempoDuracaoIntro);
         FecharIntro();
@@ -118,7 +102,40 @@ public class GameManager : MonoBehaviour
     {
         if (painelIntro != null) painelIntro.SetActive(false);
         Time.timeScale = 1f; 
+        
+        // Inicia o diálogo APÓS fechar a intro
+        StartCoroutine(IniciarDialogoComAtraso(0.5f));
+    }
+
+    IEnumerator IniciarDialogoComAtraso(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         VerificarDialogoInicial();
+    }
+
+    void VerificarDialogoInicial()
+    {
+        if (dialogueUI == null) return;
+
+        string textoParaMostrar = null;
+
+        switch (faseAtual)
+        {
+            case GamePhase.Fase1_Inspecao:
+                textoParaMostrar = textoInicioFase1;
+                break;
+            case GamePhase.Fase2_Puzzle:
+                textoParaMostrar = textoInicioFase2;
+                break;
+            case GamePhase.Fase3_Final:
+                textoParaMostrar = textoInicioFase3;
+                break;
+        }
+
+        if (!string.IsNullOrEmpty(textoParaMostrar))
+        {
+            dialogueUI.ShowDialogue("Camaleão", textoParaMostrar, null);
+        }
     }
 
     public void TogglePause()
@@ -130,16 +147,6 @@ public class GameManager : MonoBehaviour
 
     // --- LÓGICA DE FASES ---
 
-    void VerificarDialogoInicial()
-    {
-        // Apenas na Fase 3 o Camaleão pensa alto ao começar
-        if (faseAtual == GamePhase.Fase3_Final && dialogueUI != null)
-        {
-            dialogueUI.ShowDialogue("Camaleão", textoInicioFase3, null);
-        }
-    }
-
-    // FASE 1
     public void RegistrarInspecao()
     {
         if (faseAtual != GamePhase.Fase1_Inspecao) return;
@@ -149,21 +156,18 @@ public class GameManager : MonoBehaviour
 
         if (obrasInspecionadas >= totalObrasParaInspecionar)
         {
-            faseConcluida = true; // Destranca a porta
-            mensagemPendente = true; // Prepara a mensagem da Fase 1
+            faseConcluida = true;
+            mensagemPendente = true;
         }
     }
 
-    // FASE 2 (Chame isso quando completar o Puzzle dos 3 erros)
     public void PuzzleResolvido()
     {
         if (faseAtual != GamePhase.Fase2_Puzzle) return;
-        
-        faseConcluida = true; // Destranca a porta
-        mensagemPendente = true; // Prepara a mensagem da Fase 2
+        faseConcluida = true;
+        mensagemPendente = true; 
     }
 
-    // FASE 3
     public void DesligarEnergia()
     {
         luzesApagadas = true;
@@ -174,72 +178,25 @@ public class GameManager : MonoBehaviour
             dialogueUI.ShowDialogue("Camaleão", textoAposApagarLuz, null);
         }
     }
+    
+    public void ApagarLuzesPegarElias() { DesligarEnergia(); }
 
-    void Confrontar()
-    {
-        if (GameManager.instance == null) return;
+    // --- OUTROS ---
 
-        if (GameManager.instance.luzesApagadas)
-        {
-            // WIN CONDITION: Inicia o diálogo
-            if (dialogueUI != null)
-            {
-                dialogueUI.ShowDialogue("Camaleão", falaDaPrisao, null);
-                sequenciaFinalIniciada = true; // Trava o script esperando o diálogo fechar
-            }
-            else
-            {
-                // Se não tiver UI, ganha direto (fallback)
-                FinalizarJogo();
-            }
-        }
-        else
-        {
-            // LOSE CONDITION: Luzes acesas
-            Debug.Log("Elias te viu! Game Over.");
-            GameManager.instance.GameOver();
-        }
-    }
-
-    void FinalizarJogo()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.Vitoria();
-        }
-        this.enabled = false; // Desativa este script para não rodar mais nada
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) playerPerto = true;
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) playerPerto = false;
-    }
-
-    // --- MÉTODOS DE MENSAGEM (O InteractableObject chama isso) ---
+    public bool PodeSair() => faseConcluida;
 
     public string ObterMensagemDeConclusao()
     {
         if (mensagemPendente)
         {
-            mensagemPendente = false; // Consome para não repetir
-            
-            // Retorna o texto correto dependendo da fase atual
+            mensagemPendente = false;
             if (faseAtual == GamePhase.Fase1_Inspecao) return textoConclusaoFase1;
             if (faseAtual == GamePhase.Fase2_Puzzle) return textoConclusaoFase2;
         }
-        return null; // Nenhuma mensagem nova
+        return null;
     }
     
     public void AposMensagemConclusao() { } 
-
-    // --- OUTROS ---
-
-    public bool PodeSair() => faseConcluida;
 
     public void GameOver()
     {
@@ -272,7 +229,12 @@ public class GameManager : MonoBehaviour
     public void VoltarMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuPrincipal"); 
+        // Tenta usar o LevelLoader se existir, senão usa SceneManager
+        GameObject loader = GameObject.Find("_LEVEL_LOADER");
+        if (loader != null)
+             loader.GetComponent<LevelLoader>().CarregarCena("MenuPrincipal");
+        else
+             SceneManager.LoadScene("MenuPrincipal"); 
     }
     
     public void SairDoJogo()

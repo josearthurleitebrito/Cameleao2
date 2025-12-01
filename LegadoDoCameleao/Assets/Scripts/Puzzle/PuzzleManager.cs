@@ -29,6 +29,7 @@ public class PuzzleManager : MonoBehaviour
             painelPuzzle.SetActive(true);
             Time.timeScale = 0f; 
             errosEncontrados = 0;
+            Debug.Log("Puzzle Iniciado - Tempo: " + Time.timeScale);
             
             // Reseta os botões para ficarem invisíveis e clicáveis novamente (caso reinicie)
             foreach (var btn in botoesErro)

@@ -7,7 +7,10 @@ public class MainMenu : MonoBehaviour
 
     public void Jogar()
     {
-        SceneManager.LoadScene(nomePrimeiraFase);
+        if (LevelLoader.instance != null)
+            LevelLoader.instance.CarregarCena(nomePrimeiraFase);
+        else
+            SceneManager.LoadScene(nomePrimeiraFase);
     }
 
     public void Sair()

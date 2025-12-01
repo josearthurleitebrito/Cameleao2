@@ -64,7 +64,11 @@ public class LevelExit : MonoBehaviour
     void CarregarCena()
     {
         Debug.Log("Saindo da fase...");
-        SceneManager.LoadScene(nomeProximaCena);
+        
+        if (LevelLoader.instance != null)
+            LevelLoader.instance.CarregarCena(nomeProximaCena);
+        else
+            SceneManager.LoadScene(nomeProximaCena);
     }
 
     void OnTriggerEnter2D(Collider2D other)
